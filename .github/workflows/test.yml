@@ -17,7 +17,7 @@ jobs:
   git-app-test:
     name: git-app-test
     timeout-minutes: 10
-    runs-on: ubuntu-latest-4core
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
