@@ -8,7 +8,6 @@ import { OctokitService } from 'nestjs-octokit';
 @Controller()
 export class AppController {
   constructor(private readonly octokitService: OctokitService) {}
-
   @UseGuards(GithubGuard)
   @Post()
   githubWebhoook() {}
@@ -27,9 +26,11 @@ export class AppController {
 
   @Get('/')
   async someEndpoint() {
-    const response = await this.octokitService.rest.search.repos({
-      q: 'nest-js',
-    });
-    return response.data.items;
+    console.log('WH SECRET', process.env.GITHUB_WEBHOOK_SECRET);
+    // const response = await this.octokitService.rest.search.repos({
+    //   q: 'nest-js',
+    // });
+    // return response.data.items;
+    return;
   }
 }
