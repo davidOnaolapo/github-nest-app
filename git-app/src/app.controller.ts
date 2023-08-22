@@ -1,12 +1,35 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Post, Get, UseGuards, Body } from '@nestjs/common';
+import {
+  GithubGuard,
+  GithubWebhookEvents,
+} from '@dev-thought/nestjs-github-webhooks';
+import { OctokitService } from 'nestjs-octokit';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly octokitService: OctokitService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @UseGuards(GithubGuard)
+  @Post()
+  githubWebhoook() {}
+
+  @UseGuards(GithubGuard)
+  @GithubWebhookEvents(['push', 'pullrequest'])
+  @Post('pull_request')
+  async onPullRequest(@Body() payload: any) {
+    //inside webhook, grab pr id/ add label
+    console.log('**PAYLOAD', payload);
+    const response = await this.octokitService.rest.search.repos({
+      q: 'nest-js',
+    });
+    return response.data.items;
+  }
+
+  @Get('/')
+  async someEndpoint() {
+    const response = await this.octokitService.rest.search.repos({
+      q: 'nest-js',
+    });
+    return response.data.items;
   }
 }

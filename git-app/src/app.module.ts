@@ -1,10 +1,20 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { GithubWebhooksModule } from '@dev-thought/nestjs-github-webhooks';
+import { OctokitModule } from 'nestjs-octokit';
 
 @Module({
-  imports: [],
+  imports: [
+    GithubWebhooksModule.forRoot({
+      webhookSecret: process.env.GITHUB_WEBHOOK_SECRET,
+    }),
+    OctokitModule.forRoot({
+      isGlobal: true,
+      octokitOptions: {
+        auth: 'my-github-token',
+      },
+    }),
+  ],
   controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
