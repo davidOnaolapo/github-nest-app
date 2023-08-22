@@ -5,8 +5,8 @@ import { OctokitModule } from 'nestjs-octokit';
 
 @Module({
   imports: [
-    GithubWebhooksModule.forRoot({
-      webhookSecret: process.env.GITHUB_WEBHOOK_SECRET,
+    GithubWebhooksModule.forRootAsync({
+      useFactory: () => ({ webhookSecret: process.env.GITHUB_WEBHOOK_SECRET }),
     }),
     OctokitModule.forRoot({
       isGlobal: true,
