@@ -5,12 +5,14 @@ on:
       - master
     paths:
       - "git-app/*/**"
+      - ".github/workflows/test.yml"
     tags-ignore:
       - v*.*.*
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
       - "git-app/*/**"
+      - ".github/workflows/test.yml"
 jobs:
   git-app-test:
     name: git-app-test
