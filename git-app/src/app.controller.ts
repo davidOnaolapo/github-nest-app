@@ -14,7 +14,7 @@ export class AppController {
 
   @UseGuards(GithubGuard)
   @GithubWebhookEvents(['push', 'pullrequest'])
-  @Post('push')
+  @Post('2A0CKbN8OjqZtrA')
   async onPullRequest(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
     console.log('**PAYLOAD', payload);
