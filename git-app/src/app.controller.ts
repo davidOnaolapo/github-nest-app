@@ -8,11 +8,11 @@ import { OctokitService } from 'nestjs-octokit';
 @Controller()
 export class AppController {
   constructor(private readonly octokitService: OctokitService) {}
-  @UseGuards(GithubGuard)
+  // @UseGuards(GithubGuard)
   @Post()
   githubWebhoook() {}
 
-  @UseGuards(GithubGuard)
+  // @UseGuards(GithubGuard)
   @GithubWebhookEvents(['push', 'pullrequest'])
   @Post('/event_handler')
   async onPullRequest(@Body() payload: any) {
