@@ -17,7 +17,7 @@ export class AppController {
   @Post('2A0CKbN8OjqZtrA')
   async onPullRequest(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
-    console.log('**PAYLOAD', payload);
+    console.log('**PAYLOAD**', payload);
     const response = await this.octokitService.rest.search.repos({
       q: 'nest-js',
     });
