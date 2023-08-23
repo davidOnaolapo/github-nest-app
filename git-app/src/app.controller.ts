@@ -14,7 +14,7 @@ export class AppController {
 
   @UseGuards(GithubGuard)
   @GithubWebhookEvents(['push', 'pullrequest'])
-  @Post('/event_handler')
+  @Post('onPullRequest')
   async onPullRequest(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
     console.log('**PAYLOAD*', payload);
@@ -27,10 +27,10 @@ export class AppController {
   @Get('/')
   async someEndpoint() {
     console.log('WH SECRET', process.env.GITHUB_WEBHOOK_SECRET);
-    // const response = await this.octokitService.rest.search.repos({
-    //   q: 'nest-js',
-    // });
-    // return response.data.items;
+    const response = await this.octokitService.rest.search.repos({
+      q: 'nest-js',
+    });
+    return response.data.items;
     return;
   }
 }
