@@ -18,10 +18,11 @@ export class AppController {
   async onPullRequest(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
     console.log('**PAYLOAD*', payload);
-    const response = await this.octokitService.rest.search.repos({
-      q: 'nest-js',
-    });
-    return response.data.items;
+    // const response = await this.octokitService.rest.search.repos({
+    //   q: 'nest-js',
+    // });
+    // return response.data.items;
+    return;
   }
 
   @Get('/')
