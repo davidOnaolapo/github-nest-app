@@ -13,7 +13,7 @@ export class AppController {
   githubWebhoook() {}
 
   @UseGuards(GithubGuard)
-  @GithubWebhookEvents(['push', 'pull_request'])
+  @GithubWebhookEvents(['pull_request'])
   @Post('onPullRequest')
   async onPullRequest(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
