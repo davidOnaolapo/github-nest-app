@@ -7,12 +7,12 @@ import { AppService } from './app.service';
 @Module({
   imports: [
     GithubWebhooksModule.forRootAsync({
-      useFactory: () => ({ webhookSecret: 'nest' }),
+      useFactory: () => ({ webhookSecret: process.env.GITHUB_WEBHOOK_SECRET }),
     }),
     OctokitModule.forRoot({
       isGlobal: true,
       octokitOptions: {
-        auth: 'my-githubtoken',
+        auth: process.env.GITHUB_WEBHOOK_TOKEN,
       },
     }),
   ],
