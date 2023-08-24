@@ -21,6 +21,7 @@ export class AppController {
     const response = await this.octokitService.rest.search.repos({
       q: 'nest-js',
     });
+    console.log('**OCTOKIT**', response);
     return response.data.items;
   }
 
