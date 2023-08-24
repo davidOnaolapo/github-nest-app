@@ -3,7 +3,7 @@ import {
   GithubGuard,
   GithubWebhookEvents,
 } from '@dev-thought/nestjs-github-webhooks';
-import { OctokitService } from 'nestjs-octokit';
+// import { OctokitService } from 'nestjs-octokit';
 
 @Controller()
 export class AppController {
@@ -18,10 +18,10 @@ export class AppController {
   async onPullRequest(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
     console.log('**PAYLOAD*', payload);
-    const response = await this.octokitService.rest.search.repos({
-      q: 'nest-js',
-    });
-    return response.data.items;
+    // const response = await this.octokitService.rest.search.repos({
+    //   q: 'nest-js',
+    // });
+    // return response.data.items;
   }
 
   @Post('onPushToMaster')
