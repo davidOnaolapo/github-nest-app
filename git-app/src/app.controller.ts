@@ -3,7 +3,7 @@ import {
   GithubGuard,
   GithubWebhookEvents,
 } from '@dev-thought/nestjs-github-webhooks';
-// import { OctokitService } from 'nestjs-octokit';
+import { OctokitService } from 'nestjs-octokit';
 
 @Controller()
 export class AppController {
