@@ -6,6 +6,7 @@ export class AppService {
   private graphqlWithAuth: any; // You can define a type here
 
   constructor() {
+    console.log('**hmm**', process.env.GITHUB_WEBHOOK_TOKEN);
     this.graphqlWithAuth = graphql.defaults({
       headers: {
         authorization: process.env.GITHUB_WEBHOOK_TOKEN, // Replace with your token
