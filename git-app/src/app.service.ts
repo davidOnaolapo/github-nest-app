@@ -17,7 +17,16 @@ export class AppService {
     const query = `
    {
         repository(owner: "davidOnaolapo", name: "github-nest-app") {
-            issues 
+            pullRequests(headRefName: "test-pr-trigger", first: 1) {
+                nodes {
+                  commits(last: 1) {
+                    nodes {
+                      commit {
+                        oid
+                      }
+                    }
+                  }
+                }
         }
       }
     `;
