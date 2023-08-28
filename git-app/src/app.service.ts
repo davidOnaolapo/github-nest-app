@@ -13,16 +13,18 @@ export class AppService {
     });
   }
 
-  async getRepositoryIssues(owner: string, _repo: string, branch: string) {
+  async getRepositoryIssues(owner: string, repo: string, branch: string) {
     const query = `
-    query ($owner: String!, $repo: String!, $branch: String!) {
-        repository(owner: $owner, name: $repo) {
-          workflowRuns(first: 10, status: "in_progress", branch: $branch) {
+    query {
+        repository(owner: "${owner}", name: "${repo}") {
+          pullRequests(headRefName: "${branch}", first: 1) {
             nodes {
-              id
-              name
-              workflow {
-                name
+              commits(last: 1) {
+                nodes {
+                  commit {
+                    oid
+                  }
+                }
               }
             }
           }
