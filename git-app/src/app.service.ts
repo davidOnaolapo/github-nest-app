@@ -16,8 +16,8 @@ export class AppService {
   async getRepositoryIssues(owner: string, repo: string, branch: string) {
     const query = `
     query ($owner: String!, $repo: String!, $branch: String!) {
-        repository(owner: "${owner}", name: "${repo}") {
-          workflowRuns(first: 10, status: "in_progress", branch: "${branch}) {
+        repository(owner: "davidOnaolapo", name: "github-nest-app") {
+          workflowRuns(first: 10, status: "in_progress", branch: "test-pr-trigger") {
             nodes {
               id
               name
