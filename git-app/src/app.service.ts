@@ -29,6 +29,6 @@ export class AppService {
     `;
 
     const result = await this.graphqlWithAuth(query);
-    return result.repository.issues.edges.map((edge: any) => edge.node.title);
+    return result;
   }
 }
