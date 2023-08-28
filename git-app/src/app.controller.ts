@@ -26,7 +26,7 @@ export class AppController {
   @Post('onCheckRun')
   async onCheckRun(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
-    console.log('**PAYLOAD*', payload);
+    console.log('**PAYLOAD**', payload);
   }
 
   @UseGuards(GithubGuard)
