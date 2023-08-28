@@ -17,7 +17,7 @@ export class AppService {
     const query = `
     query ($owner: String!, $repo: String!, $branch: String!) {
         repository(owner: "${owner}", name: "${repo}") {
-          workflowRuns(first: 10, status: "in_progress", branch: "${branch}") {
+          workflowRuns(first: 10, status: "in_progress", branch: "${branch}) {
             nodes {
               id
               name
