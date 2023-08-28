@@ -20,12 +20,7 @@ export class AppService {
         repository(owner: "davidOnaolapo", name: "github-nest-app") {
             pullRequests(headRefName: "test-pr-trigger", first: 1) {
                 nodes {
-                  commits(last: 1) {
-                    nodes {
-                      commit {
-                        oid
-                      }
-                    }
+                  commits(last: 1)
                 }
             }
         }
