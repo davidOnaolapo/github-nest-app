@@ -17,9 +17,7 @@ export class AppService {
     const query = `
    {
         repository(owner: "davidOnaolapo", name: "github-nest-app") {
-            issues(last: 3) {
-                edges(last: 1) 
-              }
+            issues(last: 3) 
         }
       }
     `;
