@@ -15,7 +15,7 @@ export class AppService {
 
   async getRepositoryIssues() {
     const query = `
-    query ($owner: String!, $repo: String!, $branch: String!) {
+    query () {
         repository(owner: "davidOnaolapo", name: "github-nest-app") {
             issues(last: 3) {
                 edges {
