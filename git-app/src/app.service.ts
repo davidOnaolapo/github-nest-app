@@ -18,7 +18,7 @@ export class AppService {
     const query = `
    {
         repository(owner: "davidOnaolapo", name: "github-nest-app") {
-            pullRequests(headRefName: "test-pr-trigger", first: 1) {
+              pullRequests(headRefName: "test-pr-trigger", first: 1) {
                 nodes {
                   commits(last: 1) {
                     nodes {
@@ -31,12 +31,33 @@ export class AppService {
                           }
                         }
                       }
+                      headRef {
+                        name
+                        repository {
+                          workflows {
+                            nodes {
+                              name
+                              runs(first: 10, status: "in_progress") {
+                                nodes {
+                                  id
+                                  name
+                                  status
+                                  conclusion
+                                  workflow {
+                                    name
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }  
+                      }
+                    }
                   }
                 }
-            }
+              }
         }
-    }
-    `;
+          `;
 
     const result = await this.graphqlWithAuth(query);
     return result;
