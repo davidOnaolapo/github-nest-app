@@ -21,7 +21,7 @@ export class AppService {
             nodes {
               id
               name
-              workflow {
+              workflow: workflow {
                 name
               }
             }
