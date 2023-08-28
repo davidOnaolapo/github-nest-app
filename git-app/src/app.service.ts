@@ -22,25 +22,21 @@ export class AppService {
                   nodes {
                     headRef {
                       name
-                      repository {
-                        workflows {
-                          nodes {
-                            name
-                            runs(first: 10, status: "in_progress") {
-                              nodes {
-                                id
+                      target {
+                        ... on Commit {
+                          history(first: 1) {
+                            nodes {
+                              oid
+                              message
+                              author {
                                 name
-                                status
-                                conclusion
-                                workflow {
-                                  name
-                                }
+                                email
+                                date
                               }
                             }
                           }
                         }
-                      }  
-                    }
+                      }
                   }
                 }
               }
