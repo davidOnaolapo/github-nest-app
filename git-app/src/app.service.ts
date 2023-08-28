@@ -9,6 +9,7 @@ export class AppService {
     this.graphqlWithAuth = graphql.defaults({
       headers: {
         authorization: `token ${process.env.GITHUB_WEBHOOK_TOKEN}`, // Replace with your token
+        'Content-Type': 'application/json',
       },
     });
   }
