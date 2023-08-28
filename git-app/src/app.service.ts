@@ -19,39 +19,27 @@ export class AppService {
    {
         repository(owner: "davidOnaolapo", name: "github-nest-app") {
               pullRequests(headRefName: "test-pr-trigger", first: 1) {
-                nodes {
-                  commits(last: 1) {
-                    nodes {
-                        commit {
-                          message
-                          author {
+                  nodes {
+                    headRef {
+                      name
+                      repository {
+                        workflows {
+                          nodes {
                             name
-                            email
-                            date
-                          }
-                        }
-                      }
-                      headRef {
-                        name
-                        repository {
-                          workflows {
-                            nodes {
-                              name
-                              runs(first: 10, status: "in_progress") {
-                                nodes {
-                                  id
+                            runs(first: 10, status: "in_progress") {
+                              nodes {
+                                id
+                                name
+                                status
+                                conclusion
+                                workflow {
                                   name
-                                  status
-                                  conclusion
-                                  workflow {
-                                    name
-                                  }
                                 }
                               }
                             }
                           }
-                        }  
-                      }
+                        }
+                      }  
                     }
                   }
                 }
