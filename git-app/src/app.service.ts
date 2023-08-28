@@ -17,15 +17,13 @@ export class AppService {
     const query = `
     query ($owner: String!, $repo: String!, $branch: String!) {
         repository(owner: "davidOnaolapo", name: "github-nest-app") {
-          workflowRuns(first: 10, status: "in_progress", branch: "test-pr-trigger") {
-            nodes {
-              id
-              name
-              workflow {
-                name
+            issues(last: 3) {
+                edges {
+                  node {
+                    title
+                  }
+                }
               }
-            }
-          }
         }
       }
     `;
