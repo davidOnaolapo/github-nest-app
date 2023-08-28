@@ -18,11 +18,7 @@ export class AppService {
    {
         repository(owner: "davidOnaolapo", name: "github-nest-app") {
             issues(last: 3) {
-                edges {
-                  node {
-                    title
-                  }
-                }
+                edges(last: 1) 
               }
         }
       }
