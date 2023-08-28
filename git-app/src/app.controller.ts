@@ -3,14 +3,11 @@ import {
   GithubGuard,
   GithubWebhookEvents,
 } from '@dev-thought/nestjs-github-webhooks';
-import { OctokitService } from 'nestjs-octokit';
+import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly octokitService: OctokitService) {}
-  @UseGuards(GithubGuard)
-  @Post()
-  githubWebhoook() {}
+  constructor(private readonly githubGraphqlService: AppService) {}
 
   @UseGuards(GithubGuard)
   @GithubWebhookEvents(['pull_request'])
@@ -18,11 +15,27 @@ export class AppController {
   async onPullRequest(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
     console.log('**PAYLOAD*', payload);
-    const response = await this.octokitService.rest.search.repos({
-      q: 'nest-js',
-    });
-    console.log('**OCTOKIT**', response);
-    return response.data.items;
+    const issues = await this.githubGraphqlService.getRepositoryIssues();
+
+    console.log('**OCTOKIT**', issues);
+    return;
+  }
+
+  @UseGuards(GithubGuard)
+  @GithubWebhookEvents(['check_run'])
+  @Post('onCheckRun')
+  async onCheckRun(@Body() payload: any) {
+    //inside webhook, grab pr id/ add label
+    console.log('**PAYLOAD*', payload);
+  }
+
+  @UseGuards(GithubGuard)
+  @GithubWebhookEvents(['check_suite'])
+  @Post('onCheckSuite')
+  async onCheckSuite(@Body() payload: any) {
+    //inside webhook, grab pr id/ add label
+    console.log('**PAYLOAD*', payload);
+    return;
   }
 
   @Post('onPushToMaster')
@@ -33,10 +46,6 @@ export class AppController {
 
   @Get('/')
   async someEndpoint() {
-    console.log('WH SECRET', process.env.GITHUB_WEBHOOK_SECRET);
-    const response = await this.octokitService.rest.search.repos({
-      q: 'nest-js',
-    });
-    return response.data.items;
+    return 'YES';
   }
 }
