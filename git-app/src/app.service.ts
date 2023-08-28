@@ -25,10 +25,10 @@ export class AppService {
                         oid
                       }
                     }
-                  }
                 }
+            }
         }
-      }
+    }
     `;
 
     const result = await this.graphqlWithAuth(query);
