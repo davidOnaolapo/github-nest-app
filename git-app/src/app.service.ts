@@ -13,14 +13,24 @@ export class AppService {
     });
   }
 
-  async getRepositoryIssues() {
+  async getRepositoryIssues(owner: string, repo: string, branch: string) {
     const query = `
-      {
-        repository(owner: "davidOnaolapo", name: "github-nest-app")
+    query ($owner: String!, $repo: String!, $branch: String!) {
+        repository(owner: ${owner}, name: ${repo}) {
+          workflowRuns(first: 10, status: "in_progress", branch: ${branch}) {
+            nodes {
+              id
+              name
+              workflow {
+                name
+              }
+            }
+          }
+        }
       }
     `;
 
     const result = await this.graphqlWithAuth(query);
-    return result;
+    return result.workflowRuns;
   }
 }
