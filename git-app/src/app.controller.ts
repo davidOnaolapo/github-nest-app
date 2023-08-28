@@ -15,11 +15,7 @@ export class AppController {
   async onPullRequest(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
     console.log('**PAYLOAD*', payload);
-    const issues = await this.githubGraphqlService.getRepositoryIssues(
-      'davidOnaolapo',
-      'github-nest-app',
-      'test-pr-trigger',
-    );
+    const issues = await this.githubGraphqlService.getRepositoryIssues();
 
     console.log('**OCTOKIT**', issues);
     return;

@@ -13,7 +13,7 @@ export class AppService {
     });
   }
 
-  async getRepositoryIssues(owner: string, repo: string, branch: string) {
+  async getRepositoryIssues() {
     const query = `
     query ($owner: String!, $repo: String!, $branch: String!) {
         repository(owner: "davidOnaolapo", name: "github-nest-app") {
