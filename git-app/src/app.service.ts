@@ -16,19 +16,12 @@ export class AppService {
   async getRepositoryIssues() {
     const query = `
       {
-        repository(owner: "octokit", name: "graphql.js") {
-          issues(last: 3) {
-            edges {
-              node {
-                title
-              }
-            }
-          }
+        repository(owner: "davidOnaolapo", name: "github-nest-app") {
         }
       }
     `;
 
     const result = await this.graphqlWithAuth(query);
-    return result.repository.issues.edges;
+    return result;
   }
 }
