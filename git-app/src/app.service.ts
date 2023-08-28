@@ -16,8 +16,7 @@ export class AppService {
   async getRepositoryIssues() {
     const query = `
       {
-        repository(owner: "davidOnaolapo", name: "github-nest-app") {
-        }
+        repository(owner: "davidOnaolapo", name: "github-nest-app")
       }
     `;
 
