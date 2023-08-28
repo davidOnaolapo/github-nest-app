@@ -34,7 +34,7 @@ export class AppController {
   @Post('onCheckSuite')
   async onCheckSuite(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
-    console.log('**PAYLOAD*', payload);
+    console.log('**PAYLOAD**', payload);
     return;
   }
 
