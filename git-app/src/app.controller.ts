@@ -28,7 +28,11 @@ export class AppController {
         payload.repository.owner.login,
         payload.repository.name,
       );
-    console.log('**OCTOKIT**', workflowInfo);
+    console.log(
+      '**OCTOKIT**',
+      workflowInfo[0].workflowRun?.workflow,
+      workflowInfo[0].workflowRun?.checkSuite,
+    );
     return;
   }
 
