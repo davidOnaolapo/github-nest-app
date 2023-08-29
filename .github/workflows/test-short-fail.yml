@@ -5,14 +5,14 @@ on:
       - master
     paths:
       - "git-app/*/**"
-      - ".github/workflows/test.yml"
+      - ".github/workflows/test-short-fail.yml"
     tags-ignore:
       - v*.*.*
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
       - "git-app/*/**"
-      - ".github/workflows/test.yml"
+      - ".github/workflows/test-short-fail.yml"
 jobs:
   git-app-test:
     name: git-app-test
@@ -22,6 +22,6 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Shallow clones should be disabled for SonarCloud analysis
-      - name: Install dependencies
+      - name: to fail
         run: |
-          cd git-app && npm ci
+          npm i

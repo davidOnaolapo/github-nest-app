@@ -3,34 +3,47 @@ import {
   GithubGuard,
   GithubWebhookEvents,
 } from '@dev-thought/nestjs-github-webhooks';
-import { OctokitService } from 'nestjs-octokit';
+import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly octokitService: OctokitService) {}
-  @UseGuards(GithubGuard)
-  @Post()
-  githubWebhoook() {}
+  constructor(private readonly githubGraphqlService: AppService) {}
 
   @UseGuards(GithubGuard)
-  @GithubWebhookEvents(['push', 'pullrequest'])
-  @Post('/event_handler')
+  @GithubWebhookEvents(['pull_request'])
+  @Post('onPullRequest')
   async onPullRequest(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
-    console.log('**PAYLOAD', payload);
-    const response = await this.octokitService.rest.search.repos({
-      q: 'nest-js',
-    });
-    return response.data.items;
+    console.log('**PAYLOAD**', payload);
+    return;
+  }
+
+  @UseGuards(GithubGuard)
+  @GithubWebhookEvents(['check_suite'])
+  @Post('onCheckSuite')
+  async onCheckSuite(@Body() payload: any) {
+    //inside webhook, grab pr id/ add label
+    const workflowInfo =
+      await this.githubGraphqlService.getRepositoryWorkflowInfo(
+        payload.repository.owner.login,
+        payload.repository.name,
+      );
+    console.log(
+      '**OCTOKIT**',
+      workflowInfo[2].workflowRun?.workflow,
+      workflowInfo[2].workflowRun?.checkSuite,
+    );
+    return;
+  }
+
+  @Post('onPushToMaster')
+  async onPushToMaster(@Body() payload: any) {
+    console.log('**PAYLOAD*', payload);
+    return;
   }
 
   @Get('/')
   async someEndpoint() {
-    console.log('WH SECRET', process.env.GITHUB_WEBHOOK_SECRET);
-    // const response = await this.octokitService.rest.search.repos({
-    //   q: 'nest-js',
-    // });
-    // return response.data.items;
-    return;
+    return 'YES';
   }
 }
