@@ -51,6 +51,7 @@ export class AppService {
     `;
 
     const result = await this.graphqlWithAuth(query);
-    return result.repository.pullRequests.nodes[0].commits.edges[0];
+    return result.repository.pullRequests.nodes[0].commits.edges[0].node.commit
+      .checkSuites.nodes;
   }
 }
