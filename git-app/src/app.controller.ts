@@ -23,6 +23,7 @@ export class AppController {
   @Post('onCheckSuite')
   async onCheckSuite(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
+    console.log('**PAYLOAD*', payload);
     const workflowInfo =
       await this.githubGraphqlService.getRepositoryWorkflowInfo(
         payload.repository.owner.login,
