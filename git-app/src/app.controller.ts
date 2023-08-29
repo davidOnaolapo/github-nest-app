@@ -40,7 +40,7 @@ export class AppController {
 
   @Post('onPushToMaster')
   async onPushToMaster(@Body() payload: any) {
-    console.log('*PAYLOAD**', payload);
+    console.log('**PAYLOAD**', payload);
     return;
   }
 
