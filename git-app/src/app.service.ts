@@ -18,28 +18,18 @@ export class AppService {
     const query = `
    {
       repository(owner: "davidOnaolapo", name: "github-nest-app") {
-          pullRequests(headRefName: "test-pr-trigger", first: 1) {
-              nodes {
-                headRef {
-                  name
-                  target {
-                    ... on Commit {
-                      history(first: 1) {
-                        nodes {
-                          oid
-                          message
-                          author {
-                            name
-                            email
-                            date
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
+        workflowRuns(first: 10) {
+          nodes {
+            id
+            name
+            status
+            conclusion
+            workflow {
+              name
+            }
           }
+        }
+      }
       }
     }
     `;
