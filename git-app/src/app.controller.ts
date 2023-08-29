@@ -15,9 +15,13 @@ export class AppController {
   async onPullRequest(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
     console.log('**PAYLOAD**', payload);
-    const issues = await this.githubGraphqlService.getRepositoryIssues();
+    const workflowInfo =
+      await this.githubGraphqlService.getRepositoryWorkflowInfo(
+        payload.repository.owner.login,
+        payload.repository.name,
+      );
 
-    console.log('**OCTOKIT**', issues);
+    console.log('**OCTOKIT**', workflowInfo);
     return;
   }
 

@@ -14,10 +14,10 @@ export class AppService {
     });
   }
 
-  async getRepositoryIssues() {
+  async getRepositoryWorkflowInfo(owner: string, name: string) {
     const query = `
     {
-      repository(owner: "davidOnaolapo", name: "github-nest-app") {
+      repository(owner: "${owner}", name: "${name}") {
         pullRequests(first: 10, orderBy: {field: CREATED_AT, direction: DESC}) {
           nodes {
             number
@@ -52,6 +52,6 @@ export class AppService {
 
     const result = await this.graphqlWithAuth(query);
     return result.repository.pullRequests.nodes[0].commits.edges[0].node.commit
-      .checkSuites.nodes[2];
+      .checkSuites.nodes;
   }
 }
