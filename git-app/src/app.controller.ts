@@ -19,7 +19,7 @@ export class AppController {
   }
 
   @UseGuards(GithubGuard)
-  @GithubWebhookEvents(['check_suite'])
+  @GithubWebhookEvents(['check_run'])
   @Post('onCheckSuite')
   async onCheckSuite(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
@@ -28,11 +28,12 @@ export class AppController {
         payload.repository.owner.login,
         payload.repository.name,
       );
-    console.log(
-      '**OCTOKIT**',
-      workflowInfo[2].workflowRun?.workflow,
-      workflowInfo[2].workflowRun?.checkSuite,
-    );
+    // console.log(
+    //   '**OCTOKIT**',
+    //   workflowInfo[2].workflowRun?.workflow,
+    //   workflowInfo[2].workflowRun?.checkSuite,
+    // );
+    console.log('**OCTOKIT**', workflowInfo);
     return;
   }
 
