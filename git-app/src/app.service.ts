@@ -16,16 +16,33 @@ export class AppService {
 
   async getRepositoryIssues() {
     const query = `
-   {
+    {
       repository(owner: "davidOnaolapo", name: "github-nest-app") {
-        workflowRuns(first: 10) {
+        pullRequests(first: 10, orderBy: {field: CREATED_AT, direction: DESC}) {
           nodes {
-            id
-            name
-            status
-            conclusion
-            workflow {
-              name
+            number
+            commits(last: 1) {
+              edges {
+                node {
+                  commit {
+                    checkSuites(first: 5) {
+                      nodes {
+                        workflowRun {
+                          url
+                          workflow {
+                            name
+                            state
+                          }
+                          checkSuite {
+                            conclusion
+                            status
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
