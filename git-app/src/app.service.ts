@@ -17,31 +17,32 @@ export class AppService {
   async getRepositoryIssues() {
     const query = `
    {
-        repository(owner: "davidOnaolapo", name: "github-nest-app") {
-              pullRequests(headRefName: "test-pr-trigger", first: 1) {
-                  nodes {
-                    headRef {
-                      name
-                      target {
-                        ... on Commit {
-                          history(first: 1) {
-                            nodes {
-                              oid
-                              message
-                              author {
-                                name
-                                email
-                                date
-                              }
-                            }
+      repository(owner: "davidOnaolapo", name: "github-nest-app") {
+          pullRequests(headRefName: "test-pr-trigger", first: 1) {
+              nodes {
+                headRef {
+                  name
+                  target {
+                    ... on Commit {
+                      history(first: 1) {
+                        nodes {
+                          oid
+                          message
+                          author {
+                            name
+                            email
+                            date
                           }
                         }
                       }
+                    }
                   }
                 }
               }
-        }
-          `;
+          }
+      }
+    }
+    `;
 
     const result = await this.graphqlWithAuth(query);
     return result;
