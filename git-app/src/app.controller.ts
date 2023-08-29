@@ -15,30 +15,20 @@ export class AppController {
   async onPullRequest(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
     console.log('**PAYLOAD**', payload);
+    return;
+  }
+
+  @UseGuards(GithubGuard)
+  @GithubWebhookEvents(['check_suite', 'check_run'])
+  @Post('onCheckSuite')
+  async onCheckSuite(@Body() payload: any) {
+    //inside webhook, grab pr id/ add label
     const workflowInfo =
       await this.githubGraphqlService.getRepositoryWorkflowInfo(
         payload.repository.owner.login,
         payload.repository.name,
       );
-
     console.log('**OCTOKIT**', workflowInfo);
-    return;
-  }
-
-  @UseGuards(GithubGuard)
-  @GithubWebhookEvents(['check_run'])
-  @Post('onCheckRun')
-  async onCheckRun(@Body() payload: any) {
-    //inside webhook, grab pr id/ add label
-    console.log('**PAYLOAD**', payload);
-  }
-
-  @UseGuards(GithubGuard)
-  @GithubWebhookEvents(['check_suite'])
-  @Post('onCheckSuite')
-  async onCheckSuite(@Body() payload: any) {
-    //inside webhook, grab pr id/ add label
-    console.log('**PAYLOAD*', payload);
     return;
   }
 
