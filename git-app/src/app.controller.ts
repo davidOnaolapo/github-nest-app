@@ -30,8 +30,8 @@ export class AppController {
       );
     console.log(
       '**OCTOKIT**',
-      workflowInfo[0].workflowRun?.workflow,
-      workflowInfo[0].workflowRun?.checkSuite,
+      workflowInfo[1].workflowRun?.workflow,
+      workflowInfo[1].workflowRun?.checkSuite,
     );
     return;
   }
