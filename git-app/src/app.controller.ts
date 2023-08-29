@@ -19,7 +19,7 @@ export class AppController {
   }
 
   @UseGuards(GithubGuard)
-  @GithubWebhookEvents(['check_run'])
+  @GithubWebhookEvents(['check_suite'])
   @Post('onCheckSuite')
   async onCheckSuite(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
