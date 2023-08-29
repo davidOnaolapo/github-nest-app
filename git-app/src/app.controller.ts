@@ -14,7 +14,7 @@ export class AppController {
   @Post('onPullRequest')
   async onPullRequest(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
-    console.log('*PAYLOAD*', payload);
+    console.log('*PAYLOAD**', payload);
     const issues = await this.githubGraphqlService.getRepositoryIssues();
 
     console.log('**OCTOKIT**', issues);
