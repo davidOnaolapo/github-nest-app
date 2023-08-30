@@ -10,20 +10,24 @@ export class AppController {
   constructor(private readonly githubGraphqlService: AppService) {}
 
   @UseGuards(GithubGuard)
-  @GithubWebhookEvents(['check_suite', 'pull_request'])
+  @GithubWebhookEvents(['check_suite'])
   @Post('onPrWorkflowEvent')
   async onCheckSuite(@Body() payload: any) {
-    //inside webhook, grab pr id/ add label
-    const workflowInfo =
-      await this.githubGraphqlService.getRepositoryWorkflowInfo(
-        payload.repository.owner.login,
-        payload.repository.name,
-      );
-    console.log(
-      '***WORKFLOWINFO***',
-      workflowInfo[2]?.workflowRun?.workflow,
-      workflowInfo[2]?.workflowRun?.checkSuite,
+    // const workflowInfo =
+    //   await this.githubGraphqlService.getRepositoryWorkflowInfo(
+    //     payload.repository.owner.login,
+    //     payload.repository.name,
+    //   );
+    // console.log(
+    //   '***WORKFLOWINFO***',
+    //   workflowInfo[2]?.workflowRun?.workflow,
+    //   workflowInfo[2]?.workflowRun?.checkSuite,
+    // );
+    const blockPR = this.githubGraphqlService.updatePRMergeability(
+      payload.pull_request.id,
+      false,
     );
+    console.log('blockPR??', blockPR);
     return;
   }
 }

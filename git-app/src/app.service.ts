@@ -49,9 +49,34 @@ export class AppService {
       }
     }
     `;
-
     const result = await this.graphqlWithAuth(query);
     return result.repository.pullRequests.nodes[0].commits.edges[0].node.commit
       .checkSuites.nodes;
+  }
+
+  async updatePRMergeability(prId: string, isMergeable: boolean) {
+    const mutation = `
+      mutation UpdatePullRequestMergeability($input: UpdatePullRequestInput!) {
+        updatePullRequest(input: $input) {
+          pullRequest {
+            id
+          }
+        }
+      }
+    `;
+
+    const variables = {
+      input: {
+        pullRequestId: prId,
+        mergeable: isMergeable,
+      },
+    };
+
+    try {
+      const response = await this.graphqlWithAuth(mutation, variables);
+      console.log('PR mergeability updated:', response);
+    } catch (error) {
+      console.error('Error updating PR mergeability:', error.message);
+    }
   }
 }
