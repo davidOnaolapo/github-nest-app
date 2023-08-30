@@ -39,7 +39,7 @@ export class AppController {
         payload.repository.owner.login,
         payload.repository.name,
         payload.check_suite.pull_requests[0].head.sha,
-        'failure',
+        'success',
       );
       console.log('blockPR??', blockPR);
     }
