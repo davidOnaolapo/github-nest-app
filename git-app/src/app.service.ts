@@ -72,7 +72,7 @@ export class AppService {
           repo: `${repo}`,
           sha: `${commit_sha}`,
           state: `${state}`,
-          description: 'The build failed!',
+          description: 'At least one of the workflows failed!',
           context: 'continuous-integration/enabling',
           headers: {
             'Content-Type': 'application/vnd.github+json',
