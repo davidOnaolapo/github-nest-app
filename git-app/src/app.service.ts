@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { graphql } from '@octokit/graphql';
-import { Octokit } from '@octokit/rest';
+import { Octokit } from '@octokit/core';
+import { restEndpointMethods } from '@octokit/plugin-rest-endpoint-methods';
 @Injectable()
 export class AppService {
   private graphqlWithAuth: any;
@@ -13,8 +14,9 @@ export class AppService {
         'Content-Type': 'application/json',
       },
     });
-    this.octokitRestService = new Octokit({
-      auth: `${process.env.GITHUB_WEBHOOK_TOKEN}`,
+    const MyOctokit = Octokit.plugin(restEndpointMethods);
+    this.octokitRestService = new MyOctokit({
+      auth: process.env.GITHUB_WEBHOOK_SECRET,
     });
   }
 
@@ -61,15 +63,15 @@ export class AppService {
   async updatePrMergeability(
     owner: string,
     repo: string,
-    prId: number,
-    mergable: boolean,
+    commit_sha: string,
+    state: string,
   ) {
     try {
-      const updatePr = await this.octokitRestService.pulls.update({
+      const updatePr = await this.octokitRestService.repos.createStatus({
         owner,
         repo,
-        pull_number: prId,
-        mergable,
+        commit_sha,
+        state,
       });
       return updatePr;
     } catch (error) {

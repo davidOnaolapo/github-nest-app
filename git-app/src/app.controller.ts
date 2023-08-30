@@ -29,11 +29,17 @@ export class AppController {
 
     if (payload.check_suite) {
       console.log('**PAYLOAD CHECKSUITE**', payload.check_suite.pull_requests);
+      console.log(
+        '**INFO FOR MUTATION**',
+        payload.repository.owner.login,
+        payload.repository.name,
+        payload.check_suite.pull_requests[0].head.sha,
+      );
       const blockPR = await this.githubGraphqlService.updatePrMergeability(
         payload.repository.owner.login,
         payload.repository.name,
-        payload.check_suite.pull_requests[0].id,
-        false,
+        payload.check_suite.pull_requests[0].head.sha,
+        'error',
       );
       console.log('blockPR??', blockPR);
     }
