@@ -16,7 +16,7 @@ export class AppService {
     });
     const MyOctokit = Octokit.plugin(restEndpointMethods);
     this.octokitRestService = new MyOctokit({
-      auth: process.env.GITHUB_WEBHOOK_SECRET,
+      auth: process.env.GITHUB_WEBHOOK_TOKEN,
     });
   }
 
