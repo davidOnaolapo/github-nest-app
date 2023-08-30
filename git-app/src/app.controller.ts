@@ -23,11 +23,12 @@ export class AppController {
     //   workflowInfo[2]?.workflowRun?.workflow,
     //   workflowInfo[2]?.workflowRun?.checkSuite,
     // );
-    const blockPR = this.githubGraphqlService.updatePRMergeability(
-      payload.pull_request.id,
-      false,
-    );
-    console.log('blockPR??', blockPR);
+    // const blockPR = this.githubGraphqlService.updatePRMergeability(
+    //   payload.pull_request?.id,
+    //   false,
+    // );
+    // console.log('blockPR??', blockPR);
+    console.log('PAYLOAD', payload.pull_requests);
     return;
   }
 }
