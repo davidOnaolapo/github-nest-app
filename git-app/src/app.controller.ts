@@ -20,12 +20,10 @@ export class AppController {
         payload.repository.name,
       );
     console.log(
-      '**OCTOKIT**',
+      '***WORKFLOWINFO***',
       workflowInfo[2]?.workflowRun?.workflow,
       workflowInfo[2]?.workflowRun?.checkSuite,
     );
-    console.log('**OCTOKIT**', workflowInfo);
-    console.log('**PAYLOAD**', payload);
     return;
   }
 }
