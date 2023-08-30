@@ -34,10 +34,9 @@ export class AppController {
           theWorkFlow.workflowRun?.checkSuite,
         );
       });
-      const hasFailure = workflowInfo.some(
-        (theWorkFlow: any) => theWorkFlow.conclusion === 'FAILURE',
-      );
-
+      const hasFailure = workflowInfo.some((theWorkflow: any) => {
+        return theWorkflow.conclusion === 'FAILURE';
+      });
       await this.githubGraphqlService.updatePrMergeability(
         payload.repository.owner.login,
         payload.repository.name,
