@@ -1,4 +1,4 @@
-import { Controller, Post, Get, UseGuards, Body } from '@nestjs/common';
+import { Controller, Post, UseGuards, Body } from '@nestjs/common';
 import {
   GithubGuard,
   GithubWebhookEvents,
@@ -10,17 +10,8 @@ export class AppController {
   constructor(private readonly githubGraphqlService: AppService) {}
 
   @UseGuards(GithubGuard)
-  @GithubWebhookEvents(['pull_request'])
-  @Post('onPullRequest')
-  async onPullRequest(@Body() payload: any) {
-    //inside webhook, grab pr id/ add label
-    console.log('**PAYLOAD*', payload);
-    return;
-  }
-
-  @UseGuards(GithubGuard)
   @GithubWebhookEvents(['check_suite', 'pull_request'])
-  @Post('onCheckSuite')
+  @Post('onPrWorkflowEvent')
   async onCheckSuite(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
     // const workflowInfo =
@@ -34,18 +25,7 @@ export class AppController {
     //   workflowInfo[2].workflowRun?.checkSuite,
     // );
     // console.log('**OCTOKIT**', workflowInfo);
-    console.log('hola');
+    console.log('**PAYLOAD**', payload);
     return;
-  }
-
-  @Post('onPushToMaster')
-  async onPushToMaster(@Body() payload: any) {
-    console.log('**PAYLOAD*', payload);
-    return;
-  }
-
-  @Get('/')
-  async someEndpoint() {
-    return 'YES';
   }
 }
