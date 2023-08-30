@@ -10,7 +10,7 @@ export class AppController {
   constructor(private readonly githubGraphqlService: AppService) {}
 
   @UseGuards(GithubGuard)
-  @GithubWebhookEvents(['check_suite'])
+  @GithubWebhookEvents(['check_suite', 'pull_request'])
   @Post('onPrWorkflowEvent')
   async onCheckSuite(@Body() payload: any) {
     // const workflowInfo =
@@ -28,7 +28,13 @@ export class AppController {
     //   false,
     // );
     // console.log('blockPR??', blockPR);
-    console.log('PAYLOAD', payload.pull_requests);
+    if (payload.pull_request) {
+      console.log('**PAYLOAD PR**', payload.pull_request.id);
+    }
+
+    if (payload.check_suite) {
+      console.log('**PAYLOAD CHECKSUITE**', payload.check_suite.pull_requests);
+    }
     return;
   }
 }
