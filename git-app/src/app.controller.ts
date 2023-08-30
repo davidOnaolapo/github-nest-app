@@ -14,17 +14,17 @@ export class AppController {
   @Post('onPrWorkflowEvent')
   async onCheckSuite(@Body() payload: any) {
     //inside webhook, grab pr id/ add label
-    // const workflowInfo =
-    //   await this.githubGraphqlService.getRepositoryWorkflowInfo(
-    //     payload.repository.owner.login,
-    //     payload.repository.name,
-    //   );
-    // console.log(
-    //   '**OCTOKIT**',
-    //   workflowInfo[2].workflowRun?.workflow,
-    //   workflowInfo[2].workflowRun?.checkSuite,
-    // );
-    // console.log('**OCTOKIT**', workflowInfo);
+    const workflowInfo =
+      await this.githubGraphqlService.getRepositoryWorkflowInfo(
+        payload.repository.owner.login,
+        payload.repository.name,
+      );
+    console.log(
+      '**OCTOKIT**',
+      workflowInfo[2]?.workflowRun?.workflow,
+      workflowInfo[2]?.workflowRun?.checkSuite,
+    );
+    console.log('**OCTOKIT**', workflowInfo);
     console.log('**PAYLOAD**', payload);
     return;
   }
