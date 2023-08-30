@@ -13,35 +13,35 @@ export class AppController {
   @GithubWebhookEvents(['check_suite', 'pull_request'])
   @Post('onPrWorkflowEvent')
   async onCheckSuite(@Body() payload: any) {
-    // const workflowInfo =
-    //   await this.githubGraphqlService.getRepositoryWorkflowInfo(
-    //     payload.repository.owner.login,
-    //     payload.repository.name,
-    //   );
-    // console.log(
-    //   '***WORKFLOWINFO***',
-    //   workflowInfo[2]?.workflowRun?.workflow,
-    //   workflowInfo[2]?.workflowRun?.checkSuite,
-    // );
     if (payload.pull_request) {
-      console.log('**PAYLOAD PR**', payload.pull_request.id);
+      console.log(
+        '***PR COMMIT WORKFLOWS ABOUT TO RUN ***',
+        payload.pull_request.id,
+      );
     }
 
     if (payload.check_suite) {
-      console.log('**PAYLOAD CHECKSUITE**', payload.check_suite.pull_requests);
-      console.log(
-        '**INFO FOR MUTATION**',
-        payload.repository.owner.login,
-        payload.repository.name,
-        payload.check_suite.pull_requests[0].head.sha,
-      );
-      const blockPR = await this.githubGraphqlService.updatePrMergeability(
-        payload.repository.owner.login,
-        payload.repository.name,
-        payload.check_suite.pull_requests[0].head.sha,
-        'success',
-      );
-      console.log('blockPR??', blockPR);
+      console.log('***A WORKFLOW STATE CHANGED***');
+      const workflowInfo =
+        await this.githubGraphqlService.getRepositoryWorkflowInfo(
+          payload.repository.owner.login,
+          payload.repository.name,
+        );
+      console.log('***WORKFLOWINFO***');
+      workflowInfo.forEach((theWorkFlow: any) => {
+        console.log(
+          theWorkFlow.workflowRun?.workflow,
+          theWorkFlow.workflowRun?.checkSuite,
+        );
+      });
+
+      // const blockPR = await this.githubGraphqlService.updatePrMergeability(
+      //   payload.repository.owner.login,
+      //   payload.repository.name,
+      //   payload.check_suite.pull_requests[0].head.sha,
+      //   'success',
+      // );
+      // console.log('blockPR??', blockPR);
     }
     return;
   }
