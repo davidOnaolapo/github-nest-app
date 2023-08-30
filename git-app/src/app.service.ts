@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { graphql } from '@octokit/graphql';
 import { Octokit } from '@octokit/core';
-import { restEndpointMethods } from '@octokit/plugin-rest-endpoint-methods';
 @Injectable()
 export class AppService {
   private graphqlWithAuth: any;
@@ -14,8 +13,7 @@ export class AppService {
         'Content-Type': 'application/json',
       },
     });
-    const MyOctokit = Octokit.plugin(restEndpointMethods);
-    this.octokitRestService = new MyOctokit({
+    this.octokitRestService = new Octokit({
       auth: process.env.GITHUB_WEBHOOK_TOKEN,
     });
   }
@@ -67,12 +65,20 @@ export class AppService {
     state: string,
   ) {
     try {
-      const updatePr = await this.octokitRestService.repos.createStatus({
-        owner,
-        repo,
-        commit_sha,
-        state,
-      });
+      const updatePr = await this.octokitRestService.request(
+        `POST /repos/${owner}/${repo}/statuses/${commit_sha}`,
+        {
+          owner: `${owner}`,
+          repo: `${repo}`,
+          sha: `${commit_sha}`,
+          state: `${state}`,
+          description: 'The build failed!',
+          context: 'continuous-integration/enabling',
+          headers: {
+            'Content-Type': 'application/vnd.github+json',
+          },
+        },
+      );
       return updatePr;
     } catch (error) {
       console.error('Error updating PR mergeability:', error.message);
