@@ -23,17 +23,19 @@ export class AppController {
     //   workflowInfo[2]?.workflowRun?.workflow,
     //   workflowInfo[2]?.workflowRun?.checkSuite,
     // );
-    // const blockPR = this.githubGraphqlService.updatePRMergeability(
-    //   payload.pull_request?.id,
-    //   false,
-    // );
-    // console.log('blockPR??', blockPR);
     if (payload.pull_request) {
       console.log('**PAYLOAD PR**', payload.pull_request.id);
     }
 
     if (payload.check_suite) {
       console.log('**PAYLOAD CHECKSUITE**', payload.check_suite.pull_requests);
+      const blockPR = await this.githubGraphqlService.updatePrMergeability(
+        payload.repository.owner.login,
+        payload.repository.name,
+        payload.check_suite.pull_requests[0].id,
+        false,
+      );
+      console.log('blockPR??', blockPR);
     }
     return;
   }

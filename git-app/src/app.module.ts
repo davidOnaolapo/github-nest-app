@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { GithubWebhooksModule } from '@dev-thought/nestjs-github-webhooks';
 import { AppService } from './app.service';
-
 @Module({
   imports: [
     GithubWebhooksModule.forRootAsync({
