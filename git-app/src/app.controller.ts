@@ -38,6 +38,7 @@ export class AppController {
         console.log(theWorkflow.conclusion === 'FAILURE');
         return theWorkflow.conclusion === 'FAILURE';
       });
+      console.log('HAS FAILURE', hasFailure);
       await this.githubGraphqlService.updatePrMergeability(
         payload.repository.owner.login,
         payload.repository.name,
