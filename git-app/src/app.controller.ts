@@ -38,7 +38,10 @@ export class AppController {
         return theWorkflow.workflowRun?.checkSuite?.conclusion === 'FAILURE';
       });
       const allWorkflowsDone = workflowInfo.every((theWorkflow: any) => {
-        return theWorkflow.workflowRun?.checkSuite?.status === 'COMPLETED';
+        return (
+          theWorkflow.workflowRun?.checkSuite?.status === 'COMPLETED' ||
+          undefined
+        );
       });
       let statusForRepo: string;
       allWorkflowsDone && !hasFailure
