@@ -13,7 +13,6 @@ export class AppService {
         'Content-Type': 'application/json',
       },
     });
-    console.log('GITHUB_WEBHOOK_TOKEN', process.env.GITHUB_WEBHOOK_TOKEN);
     this.octokitRestService = new Octokit({
       auth: process.env.GITHUB_WEBHOOK_TOKEN,
     });

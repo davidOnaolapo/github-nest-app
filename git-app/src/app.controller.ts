@@ -36,7 +36,7 @@ export class AppController {
       });
       const hasFailure = workflowInfo.some((theWorkflow: any) => {
         console.log(theWorkflow.conclusion === 'FAILURE');
-        return theWorkflow.conclusion === 'FAILURE';
+        return theWorkflow.workflowRun?.checkSuite?.conclusion === 'FAILURE';
       });
       console.log('HAS FAILURE', hasFailure);
       await this.githubGraphqlService.updatePrMergeability(
