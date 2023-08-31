@@ -26,5 +26,4 @@ jobs:
         run: |
           echo "Workflow started"
           sleep 60 
-          echo "Workflow resumed after delay"
-          cd git-app && npm i
+          echo "Pass resumed after delay"

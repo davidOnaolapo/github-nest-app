@@ -35,16 +35,23 @@ export class AppController {
         );
       });
       const hasFailure = workflowInfo.some((theWorkflow: any) => {
-        console.log(theWorkflow.conclusion === 'FAILURE');
         return theWorkflow.workflowRun?.checkSuite?.conclusion === 'FAILURE';
       });
-      console.log('HAS FAILURE', hasFailure);
+      const allWorkflowsDone = workflowInfo.every((theWorkflow: any) => {
+        return theWorkflow.workflowRun?.checkSuite?.status === 'COMPLETED';
+      });
+      let statusForRepo: string;
+      allWorkflowsDone && !hasFailure
+        ? (statusForRepo = 'success')
+        : hasFailure
+        ? (statusForRepo = 'failure')
+        : (statusForRepo = 'pending'),
+        console.log('**STATUSFORREPO**', statusForRepo);
       await this.githubGraphqlService.updatePrMergeability(
         payload.repository.owner.login,
         payload.repository.name,
         payload.check_suite.pull_requests[0].head.sha,
-        // hasFailure ? 'failure' : 'pending',
-        'failure',
+        statusForRepo,
       );
     }
     return;
