@@ -34,17 +34,17 @@ export class AppController {
           theWorkFlow.workflowRun?.checkSuite,
         );
       });
-      const hasFailure = workflowInfo.some((theWorkflow: any) => {
-        console.log(theWorkflow.conclusion === 'FAILURE');
-        return theWorkflow.conclusion === 'FAILURE';
-      });
-      console.log('HAS FAILURE', hasFailure);
-      await this.githubGraphqlService.updatePrMergeability(
-        payload.repository.owner.login,
-        payload.repository.name,
-        payload.check_suite.pull_requests[0].head.sha,
-        hasFailure ? 'failure' : 'pending',
-      );
+      // const hasFailure = workflowInfo.some((theWorkflow: any) => {
+      //   console.log(theWorkflow.conclusion === 'FAILURE');
+      //   return theWorkflow.conclusion === 'FAILURE';
+      // });
+      // console.log('HAS FAILURE', hasFailure);
+      // await this.githubGraphqlService.updatePrMergeability(
+      //   payload.repository.owner.login,
+      //   payload.repository.name,
+      //   payload.check_suite.pull_requests[0].head.sha,
+      //   hasFailure ? 'failure' : 'pending',
+      // );
     }
     return;
   }
