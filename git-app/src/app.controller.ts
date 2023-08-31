@@ -46,7 +46,7 @@ export class AppController {
         : hasFailure
         ? (statusForRepo = 'failure')
         : (statusForRepo = 'pending'),
-        console.log('**STATUSFORREPO**', statusForRepo);
+        console.log('***STATUSFORREPO**', statusForRepo);
       await this.githubGraphqlService.updatePrMergeability(
         payload.repository.owner.login,
         payload.repository.name,
