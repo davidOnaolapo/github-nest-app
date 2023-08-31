@@ -40,7 +40,7 @@ export class AppController {
       const allWorkflowsDone = workflowInfo.every((theWorkflow: any) => {
         return (
           theWorkflow.workflowRun?.checkSuite?.status === 'COMPLETED' ||
-          undefined
+          theWorkflow.workflowRun?.checkSuite?.status === undefined
         );
       });
       let statusForRepo: string;
