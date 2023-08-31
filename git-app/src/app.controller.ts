@@ -21,24 +21,24 @@ export class AppController {
     }
 
     if (payload.check_suite) {
-      //   console.log('***A WORKFLOWW STATE CHANGED***');
-      //   const workflowInfo =
-      //     await this.githubGraphqlService.getRepositoryWorkflowInfo(
-      //       payload.repository.owner.login,
-      //       payload.repository.name,
-      //     );
-      //   console.log('***WORKFLOWINFO***');
-      //   workflowInfo.forEach((theWorkFlow: any) => {
-      //     console.log(
-      //       theWorkFlow.workflowRun?.workflow,
-      //       theWorkFlow.workflowRun?.checkSuite,
-      //     );
-      //   });
-      // const hasFailure = workflowInfo.some((theWorkflow: any) => {
-      //   console.log(theWorkflow.conclusion === 'FAILURE');
-      //   return theWorkflow.conclusion === 'FAILURE';
-      // });
-      // console.log('HAS FAILURE', hasFailure);
+      console.log('***A WORKFLOWW STATE CHANGED***');
+      const workflowInfo =
+        await this.githubGraphqlService.getRepositoryWorkflowInfo(
+          payload.repository.owner.login,
+          payload.repository.name,
+        );
+      console.log('***WORKFLOWINFO***');
+      workflowInfo.forEach((theWorkFlow: any) => {
+        console.log(
+          theWorkFlow.workflowRun?.workflow,
+          theWorkFlow.workflowRun?.checkSuite,
+        );
+      });
+      const hasFailure = workflowInfo.some((theWorkflow: any) => {
+        console.log(theWorkflow.conclusion === 'FAILURE');
+        return theWorkflow.conclusion === 'FAILURE';
+      });
+      console.log('HAS FAILURE', hasFailure);
       await this.githubGraphqlService.updatePrMergeability(
         payload.repository.owner.login,
         payload.repository.name,
