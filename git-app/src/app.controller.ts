@@ -12,7 +12,7 @@ export class AppController {
   @UseGuards(GithubGuard)
   @GithubWebhookEvents(['pull_request', 'check_suite'])
   @Post('onPrWorkflowEvent')
-  async onPullRequest(@Body() payload: any) {
+  async onPrEvent(@Body() payload: any) {
     if (payload.pull_request) {
       console.log('****ACTION?***', payload.action);
       if (payload.action !== 'labeled' && payload.action !== 'unlabeled')

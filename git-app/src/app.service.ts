@@ -5,6 +5,8 @@ import { Octokit } from '@octokit/core';
 export class AppService {
   private graphqlWithAuth: any;
   private octokitRestService: any;
+  private owner = 'davidOnaolapo';
+  private repository = 'github-nest-app';
 
   constructor() {
     this.graphqlWithAuth = graphql.defaults({
@@ -17,33 +19,67 @@ export class AppService {
       auth: process.env.GITHUB_WEBHOOK_TOKEN,
     });
   }
+
   async updatePullRequestStatus(pr: string) {
     console.log('***UPDATING STATUS ON PR***', pr);
+    const prInfo = await this.getPrInfo(pr);
+    const prSha = this.getPrSha(prInfo);
+
+    if (this.isHotfix(prInfo)) {
+      this.setStatusCheck(prSha, 'success');
+    } else {
+      this.setStatusCheck(prSha, this.getPrStatus(prInfo));
+    }
   }
-  async getRepositoryWorkflowInfo(owner: string, name: string) {
+
+  isHotfix(prInfo) {
+    return prInfo.labels.nodes.some((l) => l.name === 'Hotfix');
+  }
+
+  getPrSha(prInfo) {
+    return prInfo.commits.nodes[0].commit.oid;
+  }
+
+  getPrStatus(prInfo) {
+    const checkRuns = prInfo.commits.nodes[0].commit.checkSuites.nodes.reduce(
+      (arr, cs) => {
+        arr = arr.concat(cs.checkRuns.nodes);
+        return arr;
+      },
+      [],
+    );
+
+    const hasFailure = checkRuns.some((cr) => cr.conclusion === 'FAILURE');
+
+    if (hasFailure) return 'failure';
+
+    const allComplete = checkRuns.every((cr) => cr.status === 'COMPLETED');
+
+    return allComplete ? 'success' : 'pending';
+  }
+
+  async getPrInfo(pr) {
     const query = `
     {
-      repository(owner: "${owner}", name: "${name}") {
-        pullRequests(first: 10, orderBy: {field: CREATED_AT, direction: DESC}) {
-          nodes {
-            number
-            commits(last: 1) {
-              edges {
-                node {
-                  commit {
-                    checkSuites(first: 5) {
+      repository(owner: "${this.owner}", name: "${this.repository}") {
+        pullRequest(number: "${pr}") {
+          id
+          title
+          commits(last: 1) {
+            nodes {
+              url
+              id
+              commit {
+                message
+                oid
+                checkSuites(first: 100) {
+                  nodes {
+                    checkRuns(first: 100) {
                       nodes {
-                        workflowRun {
-                          url
-                          workflow {
-                            name
-                            state
-                          }
-                          checkSuite {
-                            conclusion
-                            status
-                          }
-                        }
+                        status
+                        conclusion
+                        name
+                        detailsUrl
                       }
                     }
                   }
@@ -51,27 +87,26 @@ export class AppService {
               }
             }
           }
+          labels(first: 100) {
+            nodes {
+              name
+            }
+          }
         }
       }
     }
     `;
     const result = await this.graphqlWithAuth(query);
-    return result.repository.pullRequests.nodes[0].commits.edges[0].node.commit
-      .checkSuites.nodes;
+    return result.repository.pullRequest;
   }
 
-  async updatePrMergeability(
-    owner: string,
-    repo: string,
-    commit_sha: string,
-    state: string,
-  ) {
+  async setStatusCheck(commit_sha: string, state: string) {
     try {
       const updatePr = await this.octokitRestService.request(
-        `POST /repos/${owner}/${repo}/statuses/${commit_sha}`,
+        `POST /repos/${this.owner}/${this.repository}/statuses/${commit_sha}`,
         {
-          owner: `${owner}`,
-          repo: `${repo}`,
+          owner: `${this.owner}`,
+          repo: `${this.repository}`,
           sha: `${commit_sha}`,
           state: `${state}`,
           description: 'At least one of the workflows failed!',
