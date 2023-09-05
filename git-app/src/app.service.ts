@@ -24,6 +24,8 @@ export class AppService {
     console.log('***UPDATING STATUS ON PR***', pr);
     const prInfo = await this.getPrInfo(pr);
     const prSha = this.getPrSha(prInfo);
+    console.log('**prInfo***', prInfo);
+    console.log('**isHotfix***', this.isHotfix(prInfo));
 
     if (this.isHotfix(prInfo)) {
       this.setStatusCheck(prSha, 'success');
@@ -50,10 +52,11 @@ export class AppService {
     );
 
     const hasFailure = checkRuns.some((cr) => cr.conclusion === 'FAILURE');
-
+    console.log('***HAS FAILURE?***', hasFailure);
     if (hasFailure) return 'failure';
 
     const allComplete = checkRuns.every((cr) => cr.status === 'COMPLETED');
+    console.log('***ALL COMPLETE?***', allComplete);
 
     return allComplete ? 'success' : 'pending';
   }
