@@ -53,7 +53,7 @@ export class AppService {
     );
 
     const hasFailure = checkRuns.some(
-      (cr) => cr.conclusion.toLowerCase() === 'failure',
+      (cr) => cr.conclusion?.toLowerCase() === 'failure',
     );
     console.log('***HAS FAILURE?***', hasFailure);
     if (hasFailure) return 'failure';
