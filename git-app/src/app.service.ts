@@ -17,7 +17,9 @@ export class AppService {
       auth: process.env.GITHUB_WEBHOOK_TOKEN,
     });
   }
-
+  async updatePullRequestStatus(pr: string) {
+    console.log('***UPDATING STATUS ON PR***', pr);
+  }
   async getRepositoryWorkflowInfo(owner: string, name: string) {
     const query = `
     {
