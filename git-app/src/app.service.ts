@@ -35,6 +35,7 @@ export class AppService {
   }
 
   isHotfix(prInfo) {
+    console.log(prInfo.labels.nodes);
     return prInfo.labels.nodes.some((l) => l.name === 'Hotfix');
   }
 
