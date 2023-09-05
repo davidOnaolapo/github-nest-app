@@ -1,4 +1,4 @@
-name: "Test"
+name: "Test Long Pass"
 on:
   push:
     branches:
@@ -14,8 +14,8 @@ on:
       - "git-app/*/**"
       - ".github/workflows/test-long-pass.yml"
 jobs:
-  git-app-test:
-    name: git-app-test
+  git-app-test-long-pass:
+    name: git-app-test-long-pass
     timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:

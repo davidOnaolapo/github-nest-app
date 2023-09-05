@@ -1,4 +1,4 @@
-name: "Test"
+name: "Test Short Fail"
 on:
   push:
     branches:
@@ -14,8 +14,8 @@ on:
       - "git-app/*/**"
       - ".github/workflows/test-short-fail.yml"
 jobs:
-  git-app-test:
-    name: git-app-test
+  git-app-test-short-fail:
+    name: git-app-test-short-fail
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
