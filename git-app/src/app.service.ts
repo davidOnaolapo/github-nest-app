@@ -62,7 +62,7 @@ export class AppService {
     const query = `
     {
       repository(owner: "${this.owner}", name: "${this.repository}") {
-        pullRequest(number: "${pr}") {
+        pullRequest(number: ${pr}) {
           id
           title
           commits(last: 1) {
