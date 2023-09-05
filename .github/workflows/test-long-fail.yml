@@ -26,4 +26,4 @@ jobs:
         run: |
           echo "Workflow started, to fail in 3 min"
           sleep 30
-          echo "Workflow ended"
+          npm ci
