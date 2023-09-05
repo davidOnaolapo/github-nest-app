@@ -36,7 +36,7 @@ export class AppService {
 
   isHotfix(prInfo) {
     console.log(prInfo.labels.nodes);
-    return prInfo.labels.nodes.some((l) => l.name === 'Hotfix');
+    return prInfo.labels.nodes.some((l) => l.name.toLowerCase() === 'hotfix');
   }
 
   getPrSha(prInfo) {
@@ -52,11 +52,15 @@ export class AppService {
       [],
     );
 
-    const hasFailure = checkRuns.some((cr) => cr.conclusion === 'FAILURE');
+    const hasFailure = checkRuns.some(
+      (cr) => cr.conclusion.toLowerCase() === 'failure',
+    );
     console.log('***HAS FAILURE?***', hasFailure);
     if (hasFailure) return 'failure';
 
-    const allComplete = checkRuns.every((cr) => cr.status === 'COMPLETED');
+    const allComplete = checkRuns.every(
+      (cr) => cr.status.toLowerCase() === 'completed',
+    );
     console.log('***ALL COMPLETE?***', allComplete);
 
     return allComplete ? 'success' : 'pending';
