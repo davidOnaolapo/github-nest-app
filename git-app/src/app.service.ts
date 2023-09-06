@@ -25,7 +25,7 @@ export class AppService {
     const prInfo = await this.getPrInfo(pr);
     const prSha = this.getPrSha(prInfo);
     console.log('**prInfo***', prInfo);
-    console.log('**isHotfix***', this.isHotfix(prInfo));
+    console.log('*isHotfix***', this.isHotfix(prInfo));
 
     if (this.isHotfix(prInfo)) {
       this.setStatusCheck(prSha, 'success');
