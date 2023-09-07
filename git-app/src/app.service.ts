@@ -20,9 +20,9 @@ export class AppService {
     });
   }
 
-  async updatePullRequestStatus(pr: string) {
-    console.log('***UPDATING STATUS ON PR***', pr);
-    const prInfo = await this.getPrInfo(pr);
+  async updatePullRequestStatus(prNumber: number) {
+    console.log('***UPDATING STATUS ON PR***', prNumber);
+    const prInfo = await this.getPrInfo(prNumber);
     const prSha = this.getPrSha(prInfo);
     console.log('**prInfo***', prInfo);
     console.log('**isHotfix***', this.isHotfix(prInfo));
@@ -51,7 +51,7 @@ export class AppService {
       },
       [],
     );
-
+    console.log('checkRuns', checkRuns);
     const hasFailure = checkRuns.some(
       (cr) => cr.conclusion?.toLowerCase() === 'failure',
     );
@@ -66,11 +66,11 @@ export class AppService {
     return allComplete ? 'success' : 'pending';
   }
 
-  async getPrInfo(pr) {
+  async getPrInfo(prNumber: number) {
     const query = `
     {
       repository(owner: "${this.owner}", name: "${this.repository}") {
-        pullRequest(number: ${pr}) {
+        pullRequest(number: ${prNumber}) {
           id
           title
           commits(last: 1) {

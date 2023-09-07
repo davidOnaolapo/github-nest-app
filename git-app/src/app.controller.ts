@@ -13,7 +13,7 @@ export class AppController {
   @GithubWebhookEvents(['pull_request', 'check_suite'])
   @Post('onPrEvent')
   async onPrEvent(@Body() payload: any) {
-    console.log('**PAYLOAD**', payload);
+    console.log('***PAYLOAD**', payload);
 
     if (payload.pull_request) {
       console.log('**ACTION?**', payload.action);
