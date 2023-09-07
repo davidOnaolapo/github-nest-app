@@ -14,7 +14,7 @@ export class AppController {
   @Post('onPrWorkflowEvent')
   async onPrEvent(@Body() payload: any) {
     if (payload.pull_request) {
-      console.log('**ACTION?***', payload.action);
+      console.log('**ACTION?**', payload.action);
       if (payload.action !== 'labeled' && payload.action !== 'unlabeled')
         return;
 
