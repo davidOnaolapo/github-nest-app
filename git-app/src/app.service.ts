@@ -61,7 +61,7 @@ export class AppService {
     const allComplete = checkRuns.every(
       (cr) => cr.status.toLowerCase() === 'completed',
     );
-    console.log('***ALL COMPLETE?***', allComplete);
+    console.log('***ALL COMPLETE?**', allComplete);
 
     return allComplete ? 'success' : 'pending';
   }
