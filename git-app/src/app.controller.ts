@@ -11,7 +11,7 @@ export class AppController {
 
   @UseGuards(GithubGuard)
   @GithubWebhookEvents(['pull_request', 'check_suite'])
-  @Post('onPrWorkflowEvent')
+  @Post('onPrEvent')
   async onPrEvent(@Body() payload: any) {
     console.log('***PAYLOAD**', payload);
 
