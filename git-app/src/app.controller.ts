@@ -16,7 +16,7 @@ export class AppController {
     console.log('***PAYLOAD**', payload);
 
     if (payload.pull_request) {
-      console.log('**ACTION?***', payload.action);
+      console.log('**ACTION?**', payload.action);
       if (payload.action !== 'labeled' && payload.action !== 'unlabeled')
         return;
 
