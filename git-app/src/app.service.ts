@@ -51,7 +51,7 @@ export class AppService {
       },
       [],
     );
-    console.log('checkRuns', checkRuns);
+    console.log('chekRuns', checkRuns);
     const hasFailure = checkRuns.some(
       (cr) => cr.conclusion?.toLowerCase() === 'failure',
     );
