@@ -55,7 +55,7 @@ export class AppService {
     const hasFailure = checkRuns.some(
       (cr) => cr.conclusion?.toLowerCase() === 'failure',
     );
-    console.log('**git*HAS FAILURE?***', hasFailure);
+    console.log('*git*HAS FAILURE?***', hasFailure);
     if (hasFailure) return 'failure';
 
     const allComplete = checkRuns.every(
