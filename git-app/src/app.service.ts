@@ -21,7 +21,7 @@ export class AppService {
   }
 
   async updatePullRequestStatus(prNumber: number) {
-    console.log('**UPDATING STATUS ON PR***', prNumber);
+    console.log('*UPDATING STATUS ON PR***', prNumber);
     const prInfo = await this.getPrInfo(prNumber);
     const prSha = this.getPrSha(prInfo);
     console.log('**prInfo***', prInfo);
