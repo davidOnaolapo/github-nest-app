@@ -109,7 +109,7 @@ export class AppService {
   }
 
   async setStatusCheck(commit_sha: string, state: string) {
-    console.log('*SETTING COMMIT SHA TO***', commit_sha, state);
+    console.log('**SETTING COMMIT SHA TO***', commit_sha, state);
     try {
       const updatePr = await this.octokitRestService.request(
         `POST /repos/${this.owner}/${this.repository}/statuses/${commit_sha}`,
