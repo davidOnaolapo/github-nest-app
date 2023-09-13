@@ -27,7 +27,7 @@ export class AppController {
           payload.repository.owner.login,
           payload.repository.name,
         );
-      console.log('*WORKFLOWINFO***');
+      console.log('**WORKFLOWINFO***');
       workflowInfo.forEach((theWorkFlow: any) => {
         console.log(
           theWorkFlow.workflowRun?.workflow,
