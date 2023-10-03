@@ -5,23 +5,25 @@ on:
       - master
     paths:
       - "git-app/*/**"
-      - ".github/workflows/test.yml"
+      - ".github/workflows/test-long-fail.yml"
     tags-ignore:
       - v*.*.*
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
       - "git-app/*/**"
-      - ".github/workflows/test.yml"
+      - ".github/workflows/test-long-fail.yml"
 jobs:
   git-app-test:
     name: git-app-test
-    timeout-minutes: 10
+    timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Shallow clones should be disabled for SonarCloud analysis
-      - name: Install dependencies
+      - name: to long fail
         run: |
-          cd git-app && npm ci
+          echo "Workflow started, to fail in 3 min"
+          sleep 60
+          npm ci

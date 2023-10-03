@@ -1,0 +1,28 @@
+name: "Test"
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "git-app/*/**"
+      - ".github/workflows/test-short-pass.yml"
+    tags-ignore:
+      - v*.*.*
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "git-app/*/**"
+      - ".github/workflows/test-short-pass.yml"
+jobs:
+  git-app-test:
+    name: git-app-test
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for SonarCloud analysis
+      - name: to pass
+        run: |
+          echo "Workflow started"
+          echo "Workflow ended quickly"
