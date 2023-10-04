@@ -21,7 +21,7 @@ export class AppController {
     }
 
     if (payload.check_suite) {
-      console.log('*****A WORKFLOWW STATE CHANGED***');
+      console.log('***A WORKFLOWW STATE CHANGED***');
       const workflowInfo =
         await this.githubGraphqlService.getRepositoryWorkflowInfo(
           payload.repository.owner.login,
