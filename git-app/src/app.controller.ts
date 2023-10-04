@@ -24,7 +24,7 @@ export class AppController {
         payload.pull_request.number,
       );
     } else if (payload.check_suite) {
-      console.log('****ONCHECKSUITE***');
+      console.log('***ONCHECKSUITE***');
       payload.check_suite.pull_requests.forEach((pr) =>
         this.githubGraphqlService.updatePullRequestStatus(pr.number),
       );
