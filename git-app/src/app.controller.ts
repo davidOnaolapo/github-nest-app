@@ -15,13 +15,13 @@ export class AppController {
   async onCheckSuite(@Body() payload: any) {
     if (payload.pull_request) {
       console.log(
-        '***PR COMMIT WORKFLOWS ABOUT TO RUN **',
+        '****PR COMMIT WORKFLOWS ABOUT TO RUN **',
         payload.pull_request.id,
       );
     }
 
     if (payload.check_suite) {
-      console.log('****A WORKFLOWW STATE CHANGED***');
+      console.log('***A WORKFLOWW STATE CHANGED***');
       const workflowInfo =
         await this.githubGraphqlService.getRepositoryWorkflowInfo(
           payload.repository.owner.login,
