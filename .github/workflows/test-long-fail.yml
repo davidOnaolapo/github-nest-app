@@ -25,5 +25,5 @@ jobs:
       - name: to long fail
         run: |
           echo "Workflow started, to fail in 3 min"
-          sleep 60
+          sleep 120
           npm ci
