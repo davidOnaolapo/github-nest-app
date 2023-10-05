@@ -15,7 +15,7 @@ export class AppController {
   async onCheckSuite(@Body() payload: any) {
     if (payload.pull_request) {
       console.log(
-        '****PR COMMIT WORKFLOWS ABOUT TO RUN **',
+        '*****PR COMMIT WORKFLOWS ABOUT TO RUN **',
         payload.pull_request.id,
       );
     }
