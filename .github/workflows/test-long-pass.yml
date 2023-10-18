@@ -1,27 +1,29 @@
-name: "Test"
+name: "Test Long Pass"
 on:
   push:
     branches:
       - master
     paths:
       - "git-app/*/**"
-      - ".github/workflows/test.yml"
+      - ".github/workflows/test-long-pass.yml"
     tags-ignore:
       - v*.*.*
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
       - "git-app/*/**"
-      - ".github/workflows/test.yml"
+      - ".github/workflows/test-long-pass.yml"
 jobs:
-  git-app-test:
-    name: git-app-test
-    timeout-minutes: 10
+  git-app-test-long-pass:
+    name: git-app-test-long-pass
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Shallow clones should be disabled for SonarCloud analysis
-      - name: Install dependencies
+      - name: To long pass
         run: |
-          cd git-app && npm ci
+          echo "Workflow started"
+          sleep 30 
+          echo "Pass resumed after delay"
